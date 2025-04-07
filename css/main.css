@@ -19,6 +19,10 @@ body {
   font-family: var(--red-hat-ff);
 }
 
+main {
+  display: flex;
+}
+
 .main-wrapper {
   margin-left: auto;
   margin-right: auto;
