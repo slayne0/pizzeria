@@ -10,6 +10,7 @@ async function main() {
   console.log(data[0]);
 
   const pizzaWrapper = document.querySelector(".pizzas-wrapper");
+  let result = 0;
 
   for (let i = 0; i < data.length; i++) {
     const pizzaItem = document.createElement("div");
@@ -19,8 +20,8 @@ async function main() {
     img.classList.add("pizza-picture");
     img.src = data[i].image;
 
-    const ATCB = document.createElement("span");
-    ATCB.classList.add("add-to-cart-btn");
+    const $addToCartButton = document.createElement("span");
+    $addToCartButton.classList.add("add-to-cart-btn");
 
     const img1 = document.createElement("img");
     img1.src = "../images/carbon_shopping-cart-plus.svg";
@@ -38,14 +39,41 @@ async function main() {
 
     pizzaWrapper.appendChild(pizzaItem);
     pizzaItem.appendChild(img);
-    pizzaItem.appendChild(ATCB);
-    ATCB.appendChild(img1);
+    pizzaItem.appendChild($addToCartButton);
+    $addToCartButton.appendChild(img1);
     pizzaItem.appendChild(pizzaInfo);
     pizzaInfo.appendChild(pizzaName);
     pizzaInfo.appendChild(pizzaPrice);
 
-    ATCB.innerHTML += "Add to card";
+    $addToCartButton.innerHTML += "Add to card";
+
+    $addToCartButton.addEventListener("click", function () {
+      $addToCartButton.classList.add("nomber-pizza");
+
+      const $addToCartButtonclick = document.createElement("div");
+
+      pizzaWrapper.appendChild($addToCartButtonclick);
+
+      $addToCartButtonclick.innerHTML = `
+        <img class="moins-gauche" src="/images/moins-icon.png" />
+            <span class="quantity" id="${i}">  </span>
+        <img class="plus-droite" src="/images/plus-icon.png" />
+      `;
+    });
   }
+
+  const gauche = document.querySelector(".moins-gauche");
+  const droite = document.querySelector(".plus-droite");
+  const quantity = $addToCartButton.querySelector(".quantity");
+
+  const test = quantity.id;
+  console.log("saucisson");
+  droite.addEventListener("click", function () {
+    console.log("hhdcdkk,,ns");
+    result += 1;
+    document.getElementById(i).textContent = "jhsudbqu";
+    console.log(document.getElementById(i));
+  });
 }
 
 main();
