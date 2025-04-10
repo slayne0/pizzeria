@@ -1,16 +1,14 @@
 async function pizza() {
   const res = await fetch("/data.json");
   const data = await res.json();
-  console.log(data);
   return data;
 }
 
+let result = 0;
 async function main() {
   const data = await pizza();
-  console.log(data[0]);
 
   const pizzaWrapper = document.querySelector(".pizzas-wrapper");
-  let result = 0;
 
   for (let i = 0; i < data.length; i++) {
     const pizzaItem = document.createElement("div");
@@ -37,9 +35,19 @@ async function main() {
     pizzaPrice.classList.add("pizza-price");
     pizzaPrice.textContent = data[i].price;
 
+    const $addToCartButtonclick = document.createElement("div");
+    $addToCartButtonclick.classList.add("nomber-pizza", "hidden");
+
+    $addToCartButtonclick.innerHTML = `
+    <img class="moins-gauche" src="/images/moins-icon.png" />
+        <span class="quantity" id="${i}"></span>
+    <img class="plus-droite" src="/images/plus-icon.png" />
+  `;
+
     pizzaWrapper.appendChild(pizzaItem);
     pizzaItem.appendChild(img);
     pizzaItem.appendChild($addToCartButton);
+    pizzaItem.appendChild($addToCartButtonclick);
     $addToCartButton.appendChild(img1);
     pizzaItem.appendChild(pizzaInfo);
     pizzaInfo.appendChild(pizzaName);
@@ -47,33 +55,83 @@ async function main() {
 
     $addToCartButton.innerHTML += "Add to card";
 
+    const $comande = document.querySelectorAll("aside");
+
     $addToCartButton.addEventListener("click", function () {
-      $addToCartButton.classList.add("nomber-pizza");
-
-      const $addToCartButtonclick = document.createElement("div");
-
-      pizzaWrapper.appendChild($addToCartButtonclick);
-
-      $addToCartButtonclick.innerHTML = `
-        <img class="moins-gauche" src="/images/moins-icon.png" />
-            <span class="quantity" id="${i}">  </span>
-        <img class="plus-droite" src="/images/plus-icon.png" />
-      `;
+      result += 1;
+      document.getElementById(i).textContent++;
+      $addToCartButton.classList.add("hidden");
+      $addToCartButtonclick.classList.remove("hidden");
+      $comande[0].classList.add("hidden");
+      $comande[1].classList.remove("hidden");
     });
   }
 
-  const gauche = document.querySelector(".moins-gauche");
-  const droite = document.querySelector(".plus-droite");
-  const quantity = $addToCartButton.querySelector(".quantity");
+  const gauche = document.querySelectorAll(".moins-gauche");
+  const droite = document.querySelectorAll(".plus-droite");
+  const quantity = document.querySelector(".quantity");
+  const $addToCartButton = document.querySelectorAll(".add-to-cart-btn");
+  const $addToCartButtonclick = document.querySelectorAll(".nomber-pizza");
+  const $comande = document.querySelectorAll("aside");
 
-  const test = quantity.id;
-  console.log("saucisson");
-  droite.addEventListener("click", function () {
-    console.log("hhdcdkk,,ns");
-    result += 1;
-    document.getElementById(i).textContent = "jhsudbqu";
-    console.log(document.getElementById(i));
-  });
+  for (let i = 0; i < data.length; i++) {
+    droite[i].addEventListener("click", function () {
+      document.getElementById(i).textContent++;
+    });
+
+    gauche[i].addEventListener("click", function () {
+      document.getElementById(i).textContent--;
+      if (document.getElementById(i).textContent < 1) {
+        result -= 1;
+        $addToCartButton[i].classList.remove("hidden");
+        $addToCartButtonclick[i].classList.add("hidden");
+        if (result < 1) {
+          $comande[0].classList.remove("hidden");
+          $comande[1].classList.add("hidden");
+        }
+      }
+    });
+  }
+
+  const $basketProduct = document.querySelector(".basket-products");
+
+  for (let i = 0; i < result; i++) {
+    const $basketProductItem = document.createElement("li");
+    $basketProductItem.classList.add("basket-product-item");
+
+    const $basketProductItemName = document.createElement("span");
+    $basketProductItemName.classList.add("basket-product-item-name");
+
+    const $basketProductDetail = document.createElement("span");
+    $basketProductDetail.classList.add("basket-product-details");
+
+    const $basketProductDetailQuantity = document.createElement("span");
+    $basketProductDetailQuantity.classList.add(
+      "basket-product-details-quantity"
+    );
+
+    const $basketProductDetailUnitPrice = document.createElement("span");
+    $basketProductDetailUnitPrice.classList.add(
+      "basket-product-details-unit-price"
+    );
+
+    const $basketProductDetailTotalPrice = document.createElement("span");
+    $basketProductDetailTotalPrice.classList.add(
+      "basket-product-details-total-price"
+    );
+
+    const $basketProductRemoveIcon = document.createElement("img");
+    $basketProductRemoveIcon.classList.add("basket-product-remove-icon");
+
+    $basketProduct.appendChild($basketProductItem);
+    $basketProductItem.appendChild($basketProductItemName);
+    $basketProductItem.appendChild($basketProductDetail);
+    $basketProductDetail.appendChild($basketProductDetailQuantity);
+    $basketProductDetail.appendChild($basketProductDetailUnitPrice);
+    $basketProductDetail.appendChild($basketProductDetailTotalPrice);
+    $basketProductItem.appendChild($basketProductRemoveIcon);
+  }
 }
 
 main();
+prix();

@@ -66,15 +66,21 @@ ul {
 }
 
 .nomber-pizza {
+  align-items: center;
+  border-radius: 24px;
+  border: 1px solid var(--beaver);
+  cursor: pointer;
+  display: flex;
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 8px 24px;
+  position: relative;
+  top: -20px;
+  width: 160px;
+  font-weight: 600;
   background-color: #c73b0f;
-}
-
-.plus-droite {
-  margin-left: 32px;
-}
-
-.moins-gauche {
-  margin-right: 32px;
+  justify-content: space-between;
 }
 
 .pizza-infos {
@@ -324,4 +330,8 @@ ul {
   .order-modal {
     width: 640px;
   }
+}
+
+.hidden {
+  display: none;
 }
