@@ -62,8 +62,10 @@ async function main() {
       document.getElementById(i).textContent++;
       $addToCartButton.classList.add("hidden");
       $addToCartButtonclick.classList.remove("hidden");
+      pizzaItem.classList.add("actif");
       $comande[0].classList.add("hidden");
       $comande[1].classList.remove("hidden");
+      createBasket()
     });
   }
 
@@ -77,6 +79,7 @@ async function main() {
   for (let i = 0; i < data.length; i++) {
     droite[i].addEventListener("click", function () {
       document.getElementById(i).textContent++;
+      createBasket()
     });
 
     gauche[i].addEventListener("click", function () {
@@ -85,6 +88,8 @@ async function main() {
         result -= 1;
         $addToCartButton[i].classList.remove("hidden");
         $addToCartButtonclick[i].classList.add("hidden");
+        pizzaItem.classList.remove("actif");
+        createBasket()
         if (result < 1) {
           $comande[0].classList.remove("hidden");
           $comande[1].classList.add("hidden");
@@ -93,9 +98,23 @@ async function main() {
     });
   }
 
-  const $basketProduct = document.querySelector(".basket-products");
 
+
+ 
+
+
+}
+
+function createBasket () {
+  const $basketProduct = document.querySelector(".basket-products");
+  const actif = document.querySelectorAll(".actif")
+
+  $basketProduct.innerHTML = ""
   for (let i = 0; i < result; i++) {
+    console.log(document.querySelectorAll(".pizza-info")[i])
+
+    console.log(actif[i])
+
     const $basketProductItem = document.createElement("li");
     $basketProductItem.classList.add("basket-product-item");
 
@@ -130,8 +149,11 @@ async function main() {
     $basketProductDetail.appendChild($basketProductDetailUnitPrice);
     $basketProductDetail.appendChild($basketProductDetailTotalPrice);
     $basketProductItem.appendChild($basketProductRemoveIcon);
+
+
   }
 }
 
+
+
 main();
-prix();
