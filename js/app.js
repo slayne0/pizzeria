@@ -28,12 +28,12 @@ async function main() {
     pizzaInfo.classList.add("pizza-info");
 
     const pizzaName = document.createElement("li");
-    pizzaName.classList.add("pizza-item");
+    pizzaName.classList.add("pizza-name");
     pizzaName.textContent = data[i].name;
 
     const pizzaPrice = document.createElement("li");
     pizzaPrice.classList.add("pizza-price");
-    pizzaPrice.textContent = data[i].price;
+    pizzaPrice.textContent = "$" + data[i].price;
 
     const $addToCartButtonclick = document.createElement("div");
     $addToCartButtonclick.classList.add("nomber-pizza", "hidden");
@@ -56,27 +56,25 @@ async function main() {
     $addToCartButton.innerHTML += "Add to card";
 
     const $comande = document.querySelectorAll("aside");
+    const quantity = document.querySelectorAll(".quantity");
 
     $addToCartButton.addEventListener("click", function () {
       result += 1;
       document.getElementById(i).textContent++;
       $addToCartButton.classList.add("hidden");
       $addToCartButtonclick.classList.remove("hidden");
-      pizzaItem.classList.add("actif");
+      pizzaName.classList.add("actif1");
+      pizzaPrice.classList.add("actif2")
+      quantity[i].classList.add("actif3")
       $comande[0].classList.add("hidden");
       $comande[1].classList.remove("hidden");
       createBasket()
     });
-  }
+  
 
   const gauche = document.querySelectorAll(".moins-gauche");
   const droite = document.querySelectorAll(".plus-droite");
-  const quantity = document.querySelector(".quantity");
-  const $addToCartButton = document.querySelectorAll(".add-to-cart-btn");
-  const $addToCartButtonclick = document.querySelectorAll(".nomber-pizza");
-  const $comande = document.querySelectorAll("aside");
 
-  for (let i = 0; i < data.length; i++) {
     droite[i].addEventListener("click", function () {
       document.getElementById(i).textContent++;
       createBasket()
@@ -84,11 +82,14 @@ async function main() {
 
     gauche[i].addEventListener("click", function () {
       document.getElementById(i).textContent--;
+      createBasket()
       if (document.getElementById(i).textContent < 1) {
         result -= 1;
-        $addToCartButton[i].classList.remove("hidden");
-        $addToCartButtonclick[i].classList.add("hidden");
-        pizzaItem.classList.remove("actif");
+        $addToCartButton.classList.remove("hidden");
+        $addToCartButtonclick.classList.add("hidden");
+        pizzaName.classList.remove("actif1");
+        pizzaPrice.classList.remove("actif2")
+        quantity[i].classList.remove("actif3")
         createBasket()
         if (result < 1) {
           $comande[0].classList.remove("hidden");
@@ -96,7 +97,9 @@ async function main() {
         }
       }
     });
+
   }
+  
 
 
 
@@ -107,19 +110,27 @@ async function main() {
 
 function createBasket () {
   const $basketProduct = document.querySelector(".basket-products");
-  const actif = document.querySelectorAll(".actif")
+  const totalPrice = document.querySelector(".total-order-price")
+  const actif1 = document.querySelectorAll(".actif1")
+  const actif2 = document.querySelectorAll(".actif2")
+  const actif3 = document.querySelectorAll(".actif3")
+  let total = 0
+
+  totalPrice.textContent = parseInt(0)
 
   $basketProduct.innerHTML = ""
   for (let i = 0; i < result; i++) {
-    console.log(document.querySelectorAll(".pizza-info")[i])
 
-    console.log(actif[i])
+    console.log(actif3[i].textContent)
+
+
 
     const $basketProductItem = document.createElement("li");
     $basketProductItem.classList.add("basket-product-item");
 
     const $basketProductItemName = document.createElement("span");
     $basketProductItemName.classList.add("basket-product-item-name");
+    $basketProductItemName.textContent = actif1[i].textContent
 
     const $basketProductDetail = document.createElement("span");
     $basketProductDetail.classList.add("basket-product-details");
@@ -128,11 +139,13 @@ function createBasket () {
     $basketProductDetailQuantity.classList.add(
       "basket-product-details-quantity"
     );
+    $basketProductDetailQuantity.textContent = actif3[i].textContent
 
     const $basketProductDetailUnitPrice = document.createElement("span");
     $basketProductDetailUnitPrice.classList.add(
       "basket-product-details-unit-price"
     );
+    $basketProductDetailUnitPrice.textContent = actif2[i].textContent
 
     const $basketProductDetailTotalPrice = document.createElement("span");
     $basketProductDetailTotalPrice.classList.add(
@@ -150,8 +163,14 @@ function createBasket () {
     $basketProductDetail.appendChild($basketProductDetailTotalPrice);
     $basketProductItem.appendChild($basketProductRemoveIcon);
 
+ 
+
+    total += parseInt($basketProductDetailUnitPrice.textContent.replace("$", "")) * actif3[i].textContent
+
 
   }
+
+  totalPrice.textContent = total
 }
 
 
