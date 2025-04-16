@@ -1,5 +1,5 @@
 async function pizza() {
-  const res = await fetch("/data.json");
+  const res = await fetch("./data.json");
   const data = await res.json();
   return data;
 }
@@ -61,11 +61,13 @@ async function main() {
     $addToCartButton.addEventListener("click", function () {
       result += 1;
       document.getElementById(i).textContent++;
-      $addToCartButton.classList.add("hidden");
+      $addToCartButton.classList.add("hidden", "actif4");
       $addToCartButtonclick.classList.remove("hidden");
+      $addToCartButtonclick.classList.add("actif5");
       pizzaName.classList.add("actif1");
       pizzaPrice.classList.add("actif2")
       quantity[i].classList.add("actif3")
+      
       $comande[0].classList.add("hidden");
       $comande[1].classList.remove("hidden");
       createBasket()
@@ -85,8 +87,9 @@ async function main() {
       createBasket()
       if (document.getElementById(i).textContent < 1) {
         result -= 1;
-        $addToCartButton.classList.remove("hidden");
+        $addToCartButton.classList.remove("hidden", "actif4");
         $addToCartButtonclick.classList.add("hidden");
+        $addToCartButtonclick.classList.remove("actif5");
         pizzaName.classList.remove("actif1");
         pizzaPrice.classList.remove("actif2")
         quantity[i].classList.remove("actif3")
@@ -114,15 +117,14 @@ function createBasket () {
   const actif1 = document.querySelectorAll(".actif1")
   const actif2 = document.querySelectorAll(".actif2")
   const actif3 = document.querySelectorAll(".actif3")
+  const actif4 = document.querySelectorAll(".actif4")
+  const actif5 = document.querySelectorAll(".actif5")
   let total = 0
 
   totalPrice.textContent = parseInt(0)
 
   $basketProduct.innerHTML = ""
   for (let i = 0; i < result; i++) {
-
-    console.log(actif3[i].textContent)
-
 
 
     const $basketProductItem = document.createElement("li");
@@ -139,7 +141,7 @@ function createBasket () {
     $basketProductDetailQuantity.classList.add(
       "basket-product-details-quantity"
     );
-    $basketProductDetailQuantity.textContent = actif3[i].textContent
+    $basketProductDetailQuantity.textContent = actif3[i].textContent + "×"
 
     const $basketProductDetailUnitPrice = document.createElement("span");
     $basketProductDetailUnitPrice.classList.add(
@@ -151,9 +153,11 @@ function createBasket () {
     $basketProductDetailTotalPrice.classList.add(
       "basket-product-details-total-price"
     );
+    $basketProductDetailTotalPrice.textContent = parseInt(actif2[i].textContent.replace("$", "")) * actif3[i].textContent
 
     const $basketProductRemoveIcon = document.createElement("img");
     $basketProductRemoveIcon.classList.add("basket-product-remove-icon");
+    $basketProductRemoveIcon.src = "../images/remove-icon.svg"
 
     $basketProduct.appendChild($basketProductItem);
     $basketProductItem.appendChild($basketProductItemName);
@@ -162,15 +166,27 @@ function createBasket () {
     $basketProductDetail.appendChild($basketProductDetailUnitPrice);
     $basketProductDetail.appendChild($basketProductDetailTotalPrice);
     $basketProductItem.appendChild($basketProductRemoveIcon);
-
  
+    total += parseInt(actif2[i].textContent.replace("$", "")) * actif3[i].textContent
 
-    total += parseInt($basketProductDetailUnitPrice.textContent.replace("$", "")) * actif3[i].textContent
+  const test = document.querySelectorAll(".basket-product-remove-icon")
+
+
+    $basketProductRemoveIcon.addEventListener("click", function() {
+      actif4[i].classList.remove("hidden");
+      actif5[i].classList.add("hidden");
+      actif1[i].classList.remove("actif1");
+      actif2[i].classList.remove("actif2")
+      actif3[i].classList.remove("actif3")
+      actif3[i].textContent = 0
+      result -= 1
+      createBasket()
+    })
 
 
   }
 
-  totalPrice.textContent = total
+  totalPrice.textContent = "$" + total
 }
 
 
