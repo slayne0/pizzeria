@@ -196,7 +196,7 @@ function createBasket () {
   totalPrice.textContent = "$" + total
 
   $comfirmeOrder.addEventListener("click", function() {
-    lastFunction(actif1, actif2, actif3, actif6, total)
+    lastFunction(actif1, actif2, actif3, actif6, total,)
   } )
 }
 
@@ -206,7 +206,14 @@ function lastFunction (name, price, quantity, image, total) {
   const $orderModalWrapper = document.querySelector(".order-modal-wrapper")
   const orderDetail = document.querySelector(".order-detail")
 
-  console.log(image[0].src)
+
+  const actif1 = document.querySelectorAll(".actif1")
+  const actif2 = document.querySelectorAll(".actif2")
+  const actif3 = document.querySelectorAll(".actif3")
+  const actif4 = document.querySelectorAll(".actif4")
+  const actif5 = document.querySelectorAll(".actif5")
+  const actif6 = document.querySelectorAll(".actif6")
+  const comande = document.querySelectorAll("aside")
 
   orderDetail.innerHTML = ""
 
@@ -258,10 +265,27 @@ function lastFunction (name, price, quantity, image, total) {
   orderDetailTotalPrice.appendChild(totalOrderTitle)
   orderDetailTotalPrice.appendChild(priceFinal)
 
-
-  
-  
   $orderModalWrapper.classList.remove("hidden")
+
+  const newOrder = document.querySelector(".new-order-btn")
+
+  newOrder.addEventListener("click", function() {
+    $orderModalWrapper.classList.add("hidden")
+    for (let i = 0; i < result; i++) {
+      quantity[i].textContent = 0
+      actif1[i].classList.remove("actif1")
+      actif2[i].classList.remove("actif2")
+      actif3[i].classList.remove("actif3")
+      actif4[i].classList.remove("actif4", "hidden")
+      actif5[i].classList.remove("actif5")
+      actif5[i].classList.add("hidden")
+      actif6[i].classList.remove("actif6")
+      comande[0].classList.remove("hidden")
+      comande[1].classList.add("hidden")
+    }
+    result = 0
+    createBasket ()
+  })
 }
 
 
