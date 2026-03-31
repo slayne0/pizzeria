@@ -22,7 +22,7 @@ async function main() {
     $addToCartButton.classList.add("add-to-cart-btn");
 
     const img1 = document.createElement("img");
-    img1.src = "../images/carbon_shopping-cart-plus.svg";
+    img1.src = "./images/carbon_shopping-cart-plus.svg";
 
     const pizzaInfo = document.createElement("ul");
     pizzaInfo.classList.add("pizza-info");
@@ -68,15 +68,15 @@ async function main() {
       pizzaPrice.classList.add("actif2")
       quantity[i].classList.add("actif3")
       img.classList.add("actif6")
-      
+
       $comande[0].classList.add("hidden");
       $comande[1].classList.remove("hidden");
       createBasket()
     });
-  
 
-  const gauche = document.querySelectorAll(".moins-gauche");
-  const droite = document.querySelectorAll(".plus-droite");
+
+    const gauche = document.querySelectorAll(".moins-gauche");
+    const droite = document.querySelectorAll(".plus-droite");
 
     droite[i].addEventListener("click", function () {
       document.getElementById(i).textContent++;
@@ -103,16 +103,16 @@ async function main() {
     });
 
   }
-  
 
 
 
- 
+
+
 
 
 }
 
-function createBasket () {
+function createBasket() {
   const $basketProduct = document.querySelector(".basket-products");
   const totalPrice = document.querySelector(".total-order-price")
   const $yourBasket = document.querySelector(".your-basket")
@@ -171,14 +171,14 @@ function createBasket () {
     $basketProductDetail.appendChild($basketProductDetailUnitPrice);
     $basketProductDetail.appendChild($basketProductDetailTotalPrice);
     $basketProductItem.appendChild($basketProductRemoveIcon);
- 
+
     total += parseInt(actif2[i].textContent.replace("$", "")) * actif3[i].textContent
     basket += parseInt(actif3[i].textContent)
 
-  const test = document.querySelectorAll(".basket-product-remove-icon")
+    const test = document.querySelectorAll(".basket-product-remove-icon")
 
 
-    $basketProductRemoveIcon.addEventListener("click", function() {
+    $basketProductRemoveIcon.addEventListener("click", function () {
       actif4[i].classList.remove("hidden");
       actif5[i].classList.add("hidden");
       actif1[i].classList.remove("actif1");
@@ -195,14 +195,14 @@ function createBasket () {
   $yourBasket.innerHTML = `Votre panier (${basket})`;
   totalPrice.textContent = "$" + total
 
-  $comfirmeOrder.addEventListener("click", function() {
+  $comfirmeOrder.addEventListener("click", function () {
     lastFunction(actif1, actif2, actif3, actif6, total,)
-  } )
+  })
 }
 
 
 
-function lastFunction (name, price, quantity, image, total) {
+function lastFunction(name, price, quantity, image, total) {
   const $orderModalWrapper = document.querySelector(".order-modal-wrapper")
   const orderDetail = document.querySelector(".order-detail")
 
@@ -269,7 +269,7 @@ function lastFunction (name, price, quantity, image, total) {
 
   const newOrder = document.querySelector(".new-order-btn")
 
-  newOrder.addEventListener("click", function() {
+  newOrder.addEventListener("click", function () {
     $orderModalWrapper.classList.add("hidden")
     for (let i = 0; i < result; i++) {
       quantity[i].textContent = 0
@@ -284,7 +284,7 @@ function lastFunction (name, price, quantity, image, total) {
       comande[1].classList.add("hidden")
     }
     result = 0
-    createBasket ()
+    createBasket()
   })
 }
 
