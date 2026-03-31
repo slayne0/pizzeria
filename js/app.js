@@ -39,9 +39,9 @@ async function main() {
     $addToCartButtonclick.classList.add("nomber-pizza", "hidden");
 
     $addToCartButtonclick.innerHTML = `
-    <img class="moins-gauche" src="/images/moins-icon.png" />
+    <img class="moins-gauche" src="./images/moins-icon.png" />
         <span class="quantity" id="${i}"></span>
-    <img class="plus-droite" src="/images/plus-icon.png" />
+    <img class="plus-droite" src="./images/plus-icon.png" />
   `;
 
     pizzaWrapper.appendChild(pizzaItem);
